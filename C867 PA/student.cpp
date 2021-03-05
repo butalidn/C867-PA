@@ -11,9 +11,9 @@ Student::Student(string studentID, string firstName, string lastName, string ema
 	this->lastName = lastName;
 	this->email = email;
 	this->age = age;
-	/*for (int i = 0; i < NUM_COURSES; ++i) {
+	for (int i = 0; i < NUM_COURSES; ++i) {
 		this->numDays[i] = numDays[i];
-	}*/
+	}
 	this->numDays = numDays;
 	this->degree = degree;
 }
