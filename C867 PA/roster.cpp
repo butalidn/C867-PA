@@ -1,4 +1,3 @@
-
 #include <string>
 #include <iostream>
 #include "roster.h"
@@ -7,6 +6,7 @@
 #include <vector>
 using namespace std;
 
+//Takes in studentData string and parses information and calls the 'add' function for each student object
 Roster::Roster(const string* studentData) {
 	string id = "";
 	string firstName = "";
@@ -19,17 +19,7 @@ Roster::Roster(const string* studentData) {
 	string degreeStr = "";
 	DegreeProgram degree = DegreeProgram::NONE;
 
-	//Testing the string pointer
-	/*cout << "THIS IS TESTING ROSTER STRING DATA" << endl;
-	for (int i = 0; i < 5; ++i) {
-		cout << studentData[i] << endl;
-	}*/
-	
-	/*int bob[3] = { 1, 5,8 };
-	classRosterArray[0] = new Student("A5", "Nik", "Butalid", "nbutali@wgu.edu", 24, bob, DegreeProgram::SOFTWARE);
-	classRosterArray[0]->print();*/
-	
-
+//Parses data using comma delimiter and string stream
 	for (int i = 0; i < 5; ++i) {
 		string studentStr = studentData[i];
 		vector<string> data;
@@ -84,38 +74,123 @@ Roster::Roster(const string* studentData) {
 	}
 }
 
+//Takes in parameters and creates a Student object
+//An array of int pointers are created that is later deleted in Student destructor
 void Roster::add(string studentID, string firstName, string lastName, string emailAddress, int age, int daysInCourse1, int daysInCourse2, int daysInCourse3, DegreeProgram degreeprogram) {
-	int courseDays[NUM_COURSES] = { daysInCourse1, daysInCourse2, daysInCourse3 };
+	int* courseDays = new int[NUM_COURSES];
+	courseDays[0] = daysInCourse1;
+	courseDays[1] = daysInCourse2;
+	courseDays[2] = daysInCourse3;
 	classRosterArray[numStudents] = new Student(studentID, firstName, lastName, emailAddress, age, courseDays, degreeprogram);
 }
 
-/*void remove(string studentID) {
-}*/
+//Takes the given ID and sets all of the values of the Student object to a default value
+void Roster::remove(string studentID) {
+	bool foundID = false;
+	while (!foundID) {
+		for (int i = 0; i < numStudents; ++i) {
+			if (classRosterArray[i]->getID().compare(studentID) == 0) {
+				classRosterArray[i]->setID("");
+				classRosterArray[i]->setFirstName("");
+				classRosterArray[i]->setLastName("");
+				classRosterArray[i]->setEmail("");
+				classRosterArray[i]->setAge(0);
+				classRosterArray[i]->getDays()[0] = 0;
+				classRosterArray[i]->getDays()[1] = 0;
+				classRosterArray[i]->getDays()[2] = 0;
+				classRosterArray[i]->setDegree(DegreeProgram::NONE);
+				foundID = true;
+				return;
+			}
+		}
+		cout << "ERROR- Student could not be found by given ID (\"" << studentID << "\")" << endl;
+		break;
+	}
+}
 
+//Only prints out valid Student objects
 void Roster::printAll() {
 	for (int i = 0; i < numStudents; ++i)
 	{
-		classRosterArray[i]->print();
-		cout << endl;
+		if (classRosterArray[i]->getID().compare("") != 0)
+		{
+			classRosterArray[i]->print();
+			cout << endl;
+		}
 	}
 }
-/*
-void printAverageDaysInCourse(string studentID) {
 
+//Takes the array of days and find the mean value
+void Roster::printAverageDaysInCourse(string studentID) {
+	double totalDays = 0;
+	for (int i = 0; i < numStudents; ++i) {
+		if (classRosterArray[i]->getID().compare(studentID) == 0) {
+			for (int j = 0; j < NUM_COURSES; ++j) {
+				totalDays = classRosterArray[i]->getDays()[j] + totalDays;
+			}
+		}
+	}
+	cout << "(Student ID: " << studentID << ") Average Days in Course: " << (totalDays / 3) << " days" << endl << endl;
 }
 
-void printInvalidEmails() {
-
+//Checks if email contains a space, or missing a '@' or a '.'
+void Roster::printInvalidEmails() {
+	bool allValid = true;
+	size_t position = 0;
+	cout << "Checking for invalid emails..." << endl;
+	for (int i = 0; i < numStudents; ++i) {
+		if (classRosterArray[i]->getEmail().find(" ") != string::npos)
+		{
+			cout << "INVALID (contains a space): " << classRosterArray[i]->getEmail() << endl;
+			allValid = false;
+		}
+		else if (classRosterArray[i]->getEmail().find('@') == string::npos)
+		{
+			cout << "INVALID (Missing \"@\"): " << classRosterArray[i]->getEmail() << endl;
+			allValid = false;
+		}
+		else if (classRosterArray[i]->getEmail().find('.') == string::npos)
+		{
+			cout << "INVALID (Missing \".\"): " << classRosterArray[i]->getEmail() << endl;
+			allValid = false;
+		}
+	}
+	if (allValid) {
+		cout << "All emails are valid!" << endl;
+	}
+	cout << endl;
 }
 
-void printByDegreeProgram(DegreeProgram degreeProgram) {
+//Prints student info by given degree
+void Roster::printByDegreeProgram(DegreeProgram degreeProgram) {
+	string degree = "";
+	switch (degreeProgram)
+	{
+	case DegreeProgram::NETWORK:
+		degree = "NETWORK";
+		break;
+	case DegreeProgram::SECURITY:
+		degree = "SECURITY";
+		break;
+	case DegreeProgram::SOFTWARE:
+		degree = "SOFTWARE";
+		break;
+	}
+	cout << "Printing all " + degree + " students..." << endl;
+	for (int i = 0; i < numStudents; ++i) {
+		if (classRosterArray[i]->getDegree() == degreeProgram)
+		{
+			classRosterArray[i]->print();
+			cout << endl << endl;
 
+		}
+	}
 }
-*/
+
+//Deletes the array of Student objects in classRosterArray
 Roster::~Roster() {
 	for (int i = 0; i < numStudents; ++i) {
 		delete classRosterArray[i];
 	}
-	
 	return;
 }

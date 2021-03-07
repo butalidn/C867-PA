@@ -2,22 +2,20 @@
 #include <iostream>
 #include "student.h"
 #include "degree.h"
-
 using namespace std;
 
+//Construtor intializes object and loads given parameters into private data members
 Student::Student(string studentID, string firstName, string lastName, string email, int age, int* numDays, DegreeProgram degree) {
 	this->studentID = studentID;
 	this->firstName = firstName;
 	this->lastName = lastName;
 	this->email = email;
 	this->age = age;
-	for (int i = 0; i < NUM_COURSES; ++i) {
-		this->numDays[i] = numDays[i];
-	}
 	this->numDays = numDays;
 	this->degree = degree;
 }
 
+//Mutator functions for ID, first and last name, email, age, days in courses, and degree
 void Student::setID(string studentID) {
 	this->studentID = studentID;
 }
@@ -46,20 +44,25 @@ void Student::setDegree(DegreeProgram degree) {
 	this->degree = degree;
 }
 
+//Prints all of student info except for email address
 void Student::print() {
+	//Ex: A1 [tab] First Name: John [tab] Last Name: Smith [tab] Age: 20 [tab]daysInCourse: {35, 40, 55} Degree Program: Security
+	cout << "Student ID: " << getID() << "\t ";
+	cout << "First Name: " << getFirstName() << "\t ";
+	cout << "Last Name: " << getLastName() << "\t ";
 	
-	cout << "Student ID: " << getID() << endl;
-	cout << "First Name: " << getFirstName() << endl;
-	cout << "Last Name: " << getLastName() << endl;
-	cout << "Email: " << getEmail() << endl;
-	cout << "Age: " << getAge() << endl;
-
-	cout << "Days to complete three courses: ";
+	//cout << "Email: " << getEmail() << "\t ";			//Email not asked for in requirements
+	cout << "Age: " << getAge() << "\t ";
+	cout << "daysInCourse: ";
+	cout << "{";
 	for (size_t i = 0; i < NUM_COURSES; ++i) {
-		cout << this->getDays()[i] << " ";
+		if (i == (NUM_COURSES - 1)) {
+			cout << getDays()[i] << "} \t";
+		}
+		else {
+			cout << getDays()[i] << ", ";
+		}
 	}
-
-	cout << endl;
 	cout << "Degree Program: ";
 
 	switch (getDegree())
@@ -75,8 +78,10 @@ void Student::print() {
 		break;
 	}
 	cout << endl;
+	
 }
 
+//Access functions for ID, first and last name, email, age, days in courses, and degree
 string Student::getID() {
 	return studentID;
 }
@@ -104,6 +109,12 @@ int* Student::getDays() {
 DegreeProgram Student::getDegree() {
 	return degree;
 }
+
+//Destructor deletes the int pointer array that was created in roster.cpp
+Student::~Student() {
+	delete[] numDays;
+}
+
 
 
 

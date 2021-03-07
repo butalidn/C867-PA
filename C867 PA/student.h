@@ -4,8 +4,6 @@
 #include <string>
 #include <iostream>
 #include "degree.h"
-
-
 using namespace std;
 
 const int NUM_COURSES = 3;
@@ -28,6 +26,7 @@ class Student {
 		int getAge();
 		int* getDays();
 		DegreeProgram getDegree();
+		~Student();
 	private:
 		string studentID;
 		string firstName;
