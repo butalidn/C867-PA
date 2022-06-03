@@ -37,9 +37,7 @@ INVALID (Missing "@"): The_lawyer99yahoo.com
 Printing all SOFTWARE students...
 Student ID: A3   First Name: Jack        Last Name: Napoli       Age: 19         daysInCourse: {20, 40, 33}     Degree Program: SOFTWARE
 
-
 Student ID: A5   First Name: Nikolas     Last Name: Butalid      Age: 24         daysInCourse: {5, 7, 22}       Degree Program: SOFTWARE
-
 
 Student ID: A1   First Name: John        Last Name: Smith        Age: 20         daysInCourse: {30, 35, 40}     Degree Program: SECURITY
 
