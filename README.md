@@ -6,7 +6,6 @@ Program Output:
 ```
 SCRIPTING AND PROGRAMMING - APPLICATIONS: C867
 Using C++
-WGU Student ID: 001531753
 Nikolas Butalid
 
 Student ID: A1   First Name: John        Last Name: Smith        Age: 20         daysInCourse: {30, 35, 40}     Degree Program: SECURITY
