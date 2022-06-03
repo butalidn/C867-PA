@@ -2,9 +2,10 @@
 
 This project was done in C++. It takes a string stream and parses the information. A student object is created for each set of data to fill a roster array. Add and remove functions were created to modify the roster. A function was created to validate a student's email. The program prints out a series of specfic tasks that were requested by the project requirements.
 
-`(Student ID: A2) Average Days in Course: 40 days`
+```
+(Student ID: A2) Average Days in Course: 40 days
 
-`(Student ID: A3) Average Days in Course: 31 days`
+(Student ID: A3) Average Days in Course: 31 days
 
 (Student ID: A4) Average Days in Course: 49.3333 days
 
@@ -26,3 +27,4 @@ Student ID: A4   First Name: Erin        Last Name: Black        Age: 22        
 Student ID: A5   First Name: Nikolas     Last Name: Butalid      Age: 24         daysInCourse: {5, 7, 22}       Degree Program: SOFTWARE
 
 ERROR- Student could not be found by given ID ("A3")
+```
